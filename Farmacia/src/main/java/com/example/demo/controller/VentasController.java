@@ -45,7 +45,78 @@ public class VentasController {
 		return "venta";
 	}
 	
+	@RequestMapping("/grabar")
+	public String grabar(@RequestParam("codigo") Integer cod,
+						 @RequestParam("serie") String ser,
+						 @RequestParam("numero") String num,
+						 @RequestParam("fecha") String fec,
+						 @RequestParam("vtotal") double vt,
+						 @RequestParam("descuento") double desc,
+						 @RequestParam("stotal") double st,
+						 @RequestParam("igv") double igv,
+						 @RequestParam("total") double total,
+						 @RequestParam("estado") String est,
+						 @RequestParam("cliente") int codClie,
+						 @RequestParam("comprobante") int codComp,
+						 @RequestParam("empleado") int codEmp,
+
+						 RedirectAttributes redirect) {		
+		try {
+			//crear objeto de la entidad producto
+			Ventas vent=new Ventas();
+			
+			
+			
 	
+			//setear atributos del objeto "pro" usando los parámetros
+			vent.setSerie(ser);
+			vent.setNumero(num);
+			vent.setFecha(LocalDate.parse(fec));
+			vent.setVtotal(vt);
+			vent.setDescuento(desc);
+			vent.setStotal(st);
+			vent.setIgv(igv);
+			vent.setTotal(total);
+			vent.setEstado(est);
+
+			//crear objeto de le entidad presentacion
+			Cliente cli=new Cliente();
+			cli.setCodigo(codClie);
+			vent.setCliente(cli);
+			
+			TipoComprobante tcom=new TipoComprobante();
+			tcom.setCodigo(codComp);
+			vent.setComprobante(tcom);
+			
+			Empleado emp=new Empleado();
+			emp.setCodigo(codEmp);
+			vent.setEmpleado(emp);
+			
+		
+
+			
+			
+
+			//validar codi
+			if(cod==0) {
+				//invocar al método registrar
+				serviceVenta.registrar(vent);
+				//mensaje 
+				redirect.addFlashAttribute("MENSAJE","Producto Registrado");
+			}
+			else {
+				//setear atributo codigo
+				vent.setCodigo(cod);
+				serviceVenta.actualizar(vent);
+				//mensaje +
+				redirect.addFlashAttribute("MENSAJE","Producto Actualizado");
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return "redirect:/venta/lista";
+	}
 	
 	
 	

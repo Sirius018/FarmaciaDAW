@@ -17,22 +17,24 @@ import jakarta.persistence.Table;
 public class TipoComprobante {
 	
 	@Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "idTipoComprobante")
-    private int idTipoComprobante;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "idTipoComprobante")
+	private Integer codigo;
+	@Column(name = "Descripcion")
+	private String descripcion;
+	@Column(name = "Estado")
+	private String estado;
+	
+	@JsonIgnore
+	@OneToMany(mappedBy = "comprobante")
+	private List<Ventas> listaComprobante;
 
-    @Column(name = "Descripcion")
-    private String descripcion;
-
-    @OneToMany(mappedBy = "obTipoComprobante")
-    private List<Ventas> listaVenta;
-
-	public int getIdTipoComprobante() {
-		return idTipoComprobante;
+	public Integer getCodigo() {
+		return codigo;
 	}
 
-	public void setIdTipoComprobante(int idTipoComprobante) {
-		this.idTipoComprobante = idTipoComprobante;
+	public void setCodigo(Integer codigo) {
+		this.codigo = codigo;
 	}
 
 	public String getDescripcion() {
@@ -43,12 +45,20 @@ public class TipoComprobante {
 		this.descripcion = descripcion;
 	}
 
-	public List<Ventas> getListaVenta() {
-		return listaVenta;
+	public String getEstado() {
+		return estado;
 	}
 
-	public void setListaVenta(List<Ventas> listaVenta) {
-		this.listaVenta = listaVenta;
+	public void setEstado(String estado) {
+		this.estado = estado;
+	}
+
+	public List<Ventas> getListaComprobante() {
+		return listaComprobante;
+	}
+
+	public void setListaComprobante(List<Ventas> listaComprobante) {
+		this.listaComprobante = listaComprobante;
 	}
 	
 	

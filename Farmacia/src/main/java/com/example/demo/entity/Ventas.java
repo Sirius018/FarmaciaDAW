@@ -16,55 +16,46 @@ import jakarta.persistence.Table;
 public class Ventas {
 
 	@Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "IdVenta")
-    private int idVenta;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "idVenta")
+	private Integer codigo;
+	@Column(name = "Serie")
+	private String serie;
+	@Column(name = "Numero")
+	private String numero;
+	@Column(name = "Fecha")
+	private LocalDate fecha;
+	@Column(name = "VentaTotal")
+	private double vtotal;
+	@Column(name = "Descuento")
+	private double descuento;
+	@Column(name = "SubTotal")
+	private double stotal;
+	@Column(name = "Igv")
+	private double igv;
+	@Column(name = "Total")
+	private double total;
+	@Column(name = "Estado")
+	private String estado;
+	
+	@ManyToOne
+	@JoinColumn(name = "idCliente")
+	private Cliente cliente;
+	
+	@ManyToOne
+	@JoinColumn(name = "idTipoComprobante")
+	private TipoComprobante comprobante;
+	
+	@ManyToOne
+	@JoinColumn(name = "idEmpleado")
+	private Empleado empleado;
 
-    @Column(name = "Serie")
-    private String serie;
-
-    @Column(name = "Numero")
-    private String numero;
-
-    @Column(name = "Fecha")
-    private String fecha;
-
-    @Column(name = "VentaTotal")
-    private double ventaTotal;
-
-    @Column(name = "Descuento")
-    private double descuento;
-
-    @Column(name = "SubTotal")
-    private double subTotal;
-
-    @Column(name = "Igv")
-    private double igv;
-
-    @Column(name = "Total")
-    private double total;
-
-    @Column(name = "Estado")
-    private String estado;
-
-    @ManyToOne
-    @JoinColumn(name = "idCliente")
-    private Cliente cliente;
-
-    @ManyToOne
-    @JoinColumn(name = "idEmpleado")
-    private Empleado empleado;
-
-    @ManyToOne
-    @JoinColumn(name = "idTipoComprobante")
-    private TipoComprobante obTipoComprobante;
-
-	public int getIdVenta() {
-		return idVenta;
+	public Integer getCodigo() {
+		return codigo;
 	}
 
-	public void setIdVenta(int idVenta) {
-		this.idVenta = idVenta;
+	public void setCodigo(Integer codigo) {
+		this.codigo = codigo;
 	}
 
 	public String getSerie() {
@@ -83,20 +74,20 @@ public class Ventas {
 		this.numero = numero;
 	}
 
-	public String getFecha() {
+	public LocalDate getFecha() {
 		return fecha;
 	}
 
-	public void setFecha(String fecha) {
+	public void setFecha(LocalDate fecha) {
 		this.fecha = fecha;
 	}
 
-	public double getVentaTotal() {
-		return ventaTotal;
+	public double getVtotal() {
+		return vtotal;
 	}
 
-	public void setVentaTotal(double ventaTotal) {
-		this.ventaTotal = ventaTotal;
+	public void setVtotal(double vtotal) {
+		this.vtotal = vtotal;
 	}
 
 	public double getDescuento() {
@@ -107,12 +98,12 @@ public class Ventas {
 		this.descuento = descuento;
 	}
 
-	public double getSubTotal() {
-		return subTotal;
+	public double getStotal() {
+		return stotal;
 	}
 
-	public void setSubTotal(double subTotal) {
-		this.subTotal = subTotal;
+	public void setStotal(double stotal) {
+		this.stotal = stotal;
 	}
 
 	public double getIgv() {
@@ -147,6 +138,14 @@ public class Ventas {
 		this.cliente = cliente;
 	}
 
+	public TipoComprobante getComprobante() {
+		return comprobante;
+	}
+
+	public void setComprobante(TipoComprobante comprobante) {
+		this.comprobante = comprobante;
+	}
+
 	public Empleado getEmpleado() {
 		return empleado;
 	}
@@ -154,14 +153,7 @@ public class Ventas {
 	public void setEmpleado(Empleado empleado) {
 		this.empleado = empleado;
 	}
-
-	public TipoComprobante getObTipoComprobante() {
-		return obTipoComprobante;
-	}
-
-	public void setObTipoComprobante(TipoComprobante obTipoComprobante) {
-		this.obTipoComprobante = obTipoComprobante;
-	}
+	
 	
 	
 	
