@@ -2,13 +2,13 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="ISO-8859-1">
-<title>Producto</title>
+<title>Ventas</title>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdn.datatables.net/1.10.23/css/dataTables.bootstrap4.min.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
 <link rel="stylesheet" th:href="@{/resources/datepicker/bootstrap-datepicker.css}">
 <link rel="stylesheet" th:href="@{/resources/alertifyjs/css/alertify.css}">
-<link rel="stylesheet" th:href="@{/resources/alertifyjs/css/alertify.min.css}">
+<link rel="stylesheet" th:href="@{/resources/alertifyjs/css/alertify.min.css}"> 
 
 
 <!-- barra navegación-->
@@ -99,10 +99,10 @@
 	}*/
 </style> 
 </head>
-<body>
+<body>	
 	<header class="">
         <div class="content-navbar">
-            <a class="logo" href="/producto/lista">PRODUCTO</a>
+            <a class="logo" href="/venta/lista">VENTA</a>
             <div class="menu-toggle"></div>
             <nav>
                 <ul>
@@ -126,54 +126,61 @@
             <div class="clearfix"></div>
         </div>
     </header>
+    
+    
 	
-	
-	
-	
-	
-	
-	<div class="container">
-			
+	<div class="container">			
 			<button type="button"  class="btn btn-primary mt-5" data-toggle="modal" data-target="#modalMedicamento" id="btn-nuevo">
-			 <i class="far fa-file" ></i> Nuevo Producto
+			 <i class="far fa-file" ></i> Registro de Ventas
 			</button>
-			<div class=" mt-2">
-					<div class="container-fluid">
-				<table class="table table-striped table-bordered mt-5" id="tableMedicamentos">
+			
+			
+			<div class="mt-2 d-flex justify-content-center">			
+				
+					<table class="table table-striped table-bordered mt-5" id="tableMedicamentos">
 							  <thead>
 							   <tr>
 					                <th>Código</th>
-					                <th>Descripcion</th>
-					                <th>Concentracion</th>
-					                <th>Stock</th>
-					                <th>Precio</th>
+					                <th>Serie</th>
+					                <th>Numero</th>
 					                <th>Fecha</th>
-					                <th>Presentacion</th>
-					                <th>Laboratorio</th>
+					                <th>VentaTotal</th>
+					                <th>Descuento</th>
+					                <th>SubTotal</th>
+					                <th>Igv</th>
+					                <th>Total</th>
+					                <th>Estado</th>
+					                <th>Cliente</th>
+					                <th>Empleado</th>
+					                <th>Comprobante</th>
 					                <th></th>
-					                <th></th>
+					                <th></th>  
 					            </tr>
 							  </thead>
 							  <tbody>
-								 <tr th:each="row:${productos}">
+								<tr th:each="row:${ventas}">
 							      <td th:text="${row.codigo}"></td>
-							      <td th:text="${row.descripcion}"></td>
-							      <td th:text="${row.concentracion}"></td>
-							      <td th:text="${row.stock}"></td>
-							      <td th:text="${row.precio}"></td>
+							      <td th:text="${row.serie}"></td>
+							      <td th:text="${row.numero}"></td>
 							      <td th:text="${row.fecha}"></td>
-							      <td th:text="${row.presentacion.descripcion}"></td>
-							      <td th:text="${row.laboratorio.nombre}"></td>
+							      <td th:text="${row.vtotal}"></td>
+							      <td th:text="${row.descuento}"></td>
+							      <td th:text="${row.stotal}"></td>
+							      <td th:text="${row.igv}"></td>
+							      <td th:text="${row.total}"></td>
+							      <td th:text="${row.estado}"></td>
+
+							      
+							      <td th:text="${row.cliente.nombre}"></td>
+							      <td th:text="${row.empleado.nombre}"></td>
+							      <td th:text="${row.comprobante.descripcion}"></td>
+
 							      
 							      <td><a class="btn btn-info btn-editar" id="btn-editar" data-toggle="modal" data-target="#modalMedicamento"><i class="far fa-edit"></i></a></td>
-							      <td><a class="btn btn-danger btn-eliminar"
-							     th:href="@{eliminarPorID(codigo=${row.codigo})}"
-							      ><i class="far fa-trash-alt"></i></a></td>
+							      <td><a class="btn btn-danger btn-eliminar"><i class="far fa-trash-alt"></i></a></td>
 							    </tr>  
 							  </tbody>
 				</table>
-				
-				</div>
 				
 			</div>
 		
@@ -185,7 +192,7 @@
 						<div class="modal-dialog modal-dialog-centered modal-login modal-lg" >					
 							<div class="modal-content">
 								<div class="modal-header bg-blue-darker">
-									<h4 class="modal-title text-white">Producto</h4>
+									<h4 class="modal-title text-white">Venta</h4>
 								</div>
 								<div class="modal-body">
 								
@@ -199,67 +206,122 @@
 											</div>
 											
 											<div class="form-group has-feedback col-md-12">
-														<label for="exampleInputEmail1"><b>Descripción(Detalle)</b></label><br>
-														<textarea class="form-control" id="idDescripcion" rows="6"  name="descripcion" required="required"
-																					   placeholder="Ingresar descripci�n" style="padding-left: 5px!important;"></textarea>												
-												</div>
-											
-												<div class="form-group has-feedback col-md-12">
-														<label for="exampleInputEmail1"><b>Concentracion</b></label><br>																
+														<label for="exampleInputEmail1"><b>Serie</b></label><br>	
+															
 														<i class="fas fa-file-signature form-control-feedback2"></i>	
-														<input type="text" class="form-control" id="idConcentracion" required="required" placeholder="Ingresar nombre" name="concentracion">																										
+														<input type="text" class="form-control" id="idSerie" placeholder="Ingresar nombre" name="serie" value="001" readonly>																										
+												</div>
+												
+												<div class="form-group has-feedback col-md-12">
+														<label for="exampleInputEmail1"><b>Numero</b></label><br>	
+															
+														<i class="fas fa-file-signature form-control-feedback2"></i>	
+														<input type="text" class="form-control" id="idNumero" placeholder="Numero" name="numero" value=" " readonly>																										
 												</div>
 
-												<div class="form-group has-feedback col-md-4">
-													<label for="exampleInputEmail1"><b>Stock</b></label><br>	
+
+												<div class="form-group has-feedback col-md-12">
+														<label for="exampleInputEmail1"><b>Venta</b></label><br>	
+															
+														<i class="fas fa-file-signature form-control-feedback2"></i>	
+														<input type="text" class="form-control" id="idvTotal" placeholder="Ingresar Venta " name="vtotal">																										
+												</div>
+							
+												<div class="form-group has-feedback col-md-6">
+														<label for="exampleInputEmail1"><b>Descuento</b></label><br>	
+															
+														<i class="fas fa-file-signature form-control-feedback2"></i>	
+														<input type="text" class="form-control" id="idDescuento" placeholder="Ingresar Descuento" name="descuento">																										
+												</div>
+												
+												
+												<button type="button" class=" form-group btn btn-success  col-md-3" id="btn-calcular">
+                                                  Calcular Total
+                                                </button>
+												
+
+												<div class="form-group has-feedback col-md-12">
+													<label for="exampleInputEmail1"><b>Sub Total</b></label><br>	
 													<i class="fas fa-pen-fancy form-control-feedback2"></i>
-													<input type="text" class="form-control" id="idStock" placeholder="Ingresar stock" name="stock" required="required">	
+													<input type="text" class="form-control" id="idsTotal" placeholder="stock" name="stotal" readonly>	
+												</div>
+	
+												<div class="form-group has-feedback col-md-12">
+													<label for="exampleInputEmail1"><b>Igv</b></label><br>
+													<i class="fas fa-money-check-alt form-control-feedback2"></i>
+													<input type="text" class="form-control" id="idIgv" placeholder="precio" name="igv" readonly>														
 												</div>
 												
 												<div class="form-group has-feedback col-md-4">
-													<label for="exampleInputEmail1"><b>Precio</b></label><br>
+													<label for="exampleInputEmail1"><b>Total</b></label><br>
 													<i class="fas fa-money-check-alt form-control-feedback2"></i>
-													<input type="text" class="form-control" id="idPrecio" placeholder="Ingresar precio" name="precio" required="required">														
+													<input type="text" class="form-control" id="idTotal" placeholder="precio" name="total" readonly>														
 												</div>
-												
+	
+												<div class="form-group has-feedback col-md-6">	
+														<label for="exampleInputEmail1"><b>Estado</b></label><br>
+												        <i class="fas fa-prescription-bottle-alt form-control-feedback2"></i>
+													    <select class="form-control" name="estado" id="idEstado">
+													      <option value=" ">[Seleccione Estado]</option>
+													      <option value="EMITIDO">EMITIDO</option>
+													      <option value="ANULADO">ANULADO</option>
+													    </select> 
+												 </div>
+
 											    <div class="form-group has-feedback col-md-4">	
-													<label for="exampleInputEmail1" class="text-center"><b>Fecha vencimiento</b></label><br>
+													<label for="exampleInputEmail1" class="text-center"><b>Fecha de Venta</b></label><br>
 												    <i class="fas fa-calendar-week form-control-feedback2"></i>
 												    <input type="text" style="background-color:#aed6f1" class="form-control" id="usr1"
-												    													  name="fecha" placeholder="YYYY-MM-DD" autocomplete="off" required="required">
-							
+												    													  name="fecha" placeholder="YYYY-MM-DD" autocomplete="off" >
 											    </div>
-											   
-											   <div class="form-group has-feedback col-md-6">	
-														<label for="exampleInputEmail1"><b>Tipo Presentacion</b></label><br>
+											    
+											    
+											    <div class="form-group has-feedback col-md-6">	
+														<label for="exampleInputEmail1"><b>Clientes</b></label><br>
 												        <i class="fas fa-prescription-bottle-alt form-control-feedback2"></i>
-													    <select class="form-control" name="presentacion" id="idPresentacion" required="required">
-													      <option value=" ">[Seleccione Tipo Presentacion]</option>
-													      <option th:each="row:${presentaciones}"
-													      th:text="${row.descripcion}"
-													      th:value="${row.codigo}"
-													      />
-													    </select>
-												 </div>
-												
-												
-												<div class="form-group has-feedback col-md-6">	
-														<label for="exampleInputEmail1"><b>Tipo Laboratorio</b></label><br>
-												        <i class="fas fa-prescription-bottle-alt form-control-feedback2"></i>
-													    <select class="form-control" name="laboratorio" id="idLaboratorio" required="required">
-													      <option value=" ">[Seleccione Tipo Laboratorio]</option>
-													      <option th:each="row:${laboratorios}"
+													    <select class="form-control" name="cliente" id="idCliente">
+													      <option value=" ">[Seleccione Cliente]</option>
+													      <option  th:each="row:${clientes}"
 													      th:text="${row.nombre}"
-													      th:value="${row.codigo}"
-													      />
+													      th:value="${row.codigo}"  />
 													    </select>
 													   
-												 </div>
+												 </div>
+
+											   
+											   <div class="form-group has-feedback col-md-6">	
+														<label for="exampleInputEmail1"><b>Empleado</b></label><br>
+												        <i class="fas fa-prescription-bottle-alt form-control-feedback2"></i>
+													    <select class="form-control" name="empleado" id="idEmpleado">
+													      <option value=" ">[Seleccione Empleado]</option>
+													      <option  th:each="row:${empleados}"
+													      th:text="${row.nombre}"
+													      th:value="${row.codigo}"  />
+													    </select>
+													   
+												 </div>
+
+											
+											<div class="form-group has-feedback col-md-6">	
+														<label for="exampleInputEmail1"><b>Tipo de Comprobante</b></label><br>
+												        <i class="fas fa-prescription-bottle-alt form-control-feedback2"></i>
+													    <select class="form-control" name="comprobante" id="idComprobante">
+													      <option value=" ">[Seleccione Tipo de Comprobante]</option>
+													      <option  th:each="row:${tipoComprobantes}"
+													      th:text="${row.descripcion}"
+													      th:value="${row.codigo}"  />
+													    </select>
+													   
+												 </div>
+		   
+											   
 											</div>
 										</div>								
 										<div class="col-md-12 text-center mt-4"> 										
 											<button type="submit" id="btn-grabar" class="btn btn-primary"><i class="fas fa-save"></i> Actualizar</button>
 											<button type="button" id="btn-cerrar" class="btn btn-danger" data-dismiss="modal"><i class="fas fa-undo-alt"></i> Cancelar</button>
+											
+
 										</div> 																								
 									</form>
 								</div>
@@ -269,6 +331,9 @@
 		<!-- FIN Modal MEDICAMENTO-->	
 	
 	</div>
+	
+
+	
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns" crossorigin="anonymous"></script>
 	<script src="https://cdn.bootcdn.net/ajax/libs/bootstrap-validator/0.5.3/js/bootstrapValidator.js"></script>
@@ -280,6 +345,37 @@
 	<script src="https://kit.fontawesome.com/08aaa156fb.js" crossorigin="anonymous"></script>
 	<script th:src="@{/resources/alertifyjs/alertify.js}"></script>
 	<script th:src="@{/resources/alertifyjs/alertify.min.js}"></script>
+	
+	
+	<!-- AUTO GENERAR NUMERO DE VENTA-->
+	  <script>
+				document.addEventListener('DOMContentLoaded', function() {
+		    
+		   
+			// Obtener el último número generado almacenado en localStorage
+			    var ultimoNumero = localStorage.getItem('ultimoNumero') || 0;
+			    
+			    
+			    
+			   
+			// Incrementar el número
+			    ultimoNumero++;
+			    
+			    // Formatear el nuevo número y agregar el prefijo "C"
+			    var nuevoCodigo = "C" + ultimoNumero.toString().padStart(5, '0');
+			    
+			    // Actualizar el campo de código
+			    
+			   
+			document.getElementById("idNumero").value = nuevoCodigo;
+			    
+			    // Guardar el nuevo número en localStorage para la próxima vez
+			    localStorage.setItem('ultimoNumero', ultimoNumero);
+		});
+     </script>
+	
+	
+	
 	
 	<script th:inline="javascript" th:if="${MENSAJE!=null}">
 		//recuperar el atributo MENSAJE
@@ -306,15 +402,24 @@
 			$.get("consultaPorID?codigo="+cod,function(response){
 				//mostrar en las cajas(tranajar con el atributo ID)
 				//los valores de response
-				$("#idCodigo").val(response.codigo);
-				$("#idDescripcion").val(response.descripcion);
-				$("#idConcentracion").val(response.concentracion);
 				
-				$("#idPrecio").val(response.precio);
-				$("#idStock").val(response.stock);
+				
+				$("#idCodigo").val(response.codigo);
+				$("#idSerie").val(response.serie);
+				$("#idNumero").val(response.numero);
+				$("#idvTotal").val(response.vtotal);
+				$("#idDescuento").val(response.descuento);
+				$("#idsTotal").val(response.stotal);
+				$("#idIgv").val(response.igv);
+				$("#idTotal").val(response.total);
+				$("#idEstado").val(response.estado);
 				$("#usr1").val(response.fecha);
-				$("#idPresentacion").val(response.presentacion.codigo);
-				$("#idLaboratorio").val(response.laboratorio.codigo);
+				$("#idCliente").val(response.cliente.codigo);
+				$("#idEmpleado").val(response.empleado.codigo);
+				$("#idComprobante").val(response.comprobante.codigo);
+				
+				
+				
 				
 			})
 		})
@@ -347,7 +452,7 @@
 					
 				alertify.confirm("SISTEMA","Seguro de eliminar!",
 						  function(){
-								window.location="http://localhost:8090/producto/eliminarPorID?codigo="+cod;
+								window.location="http://localhost:8090/venta/eliminarPorID?codigo="+cod;
 						  },
 						  function(){ 
 							alertify.error('Cancelado!')
@@ -356,6 +461,33 @@
 				})
 				
 				
+				
+				//CALCULAR EL DESCUENTO, IGV
+				
+				$(document).on("click", "#btn-calcular", function() {
+				    // Obtener los valores de los campos que necesitas para el cálculo
+				    var vtotal = parseFloat($("#idvTotal").val());
+				    var descuento = parseFloat($("#idDescuento").val());
+				    
+				    // Realizar el cálculo
+				    var stotal = vtotal - descuento;
+				    var igv = stotal * 0.18; // Suponiendo que el IGV es el 18%
+				    var total = stotal + igv;
+				    
+				    // Actualizar los campos de total en tu formulario
+				    $("#idsTotal").val(stotal.toFixed(2)); // Redondear a 2 decimales
+				    $("#idIgv").val(igv.toFixed(2));
+				    $("#idTotal").val(total.toFixed(2));
+			    });
+				
+				
+				
+				
+
+				
+				
+				
+			
 					
 		
 		
@@ -445,11 +577,8 @@
 			$('#usr1').on('changeDate', function(e) {	
 				$('#idRegistra').data('bootstrapValidator').updateStatus('fecha', 'VALIDATED');
 			})					
-	    });
-	    
+	    });    
 	</script>   
-	
-	
 	
 	
 	
@@ -475,5 +604,7 @@
         integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
         crossorigin="anonymous"></script>
     <script src="../static/js/home.js"></script>
+	
+	
 </body>
 </html>

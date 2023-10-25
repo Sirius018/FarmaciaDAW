@@ -52,23 +52,18 @@ public class ProductoController {
 						 @RequestParam("laboratorio") int codLab,
 						 RedirectAttributes redirect) {		
 		try {
-			//crear objeto de la entidad producto
 			Producto pro=new Producto();
 			
 			Presentacion pres=new Presentacion();
 			
 			Laboratorio lab=new Laboratorio();
 			
-			//setear atributos del objeto "pro" usando los parámetros
 			pro.setDescripcion(des);
 			pro.setConcentracion(con);
 			pro.setStock(stock);
 			pro.setPrecio(pre);
 			pro.setFecha(LocalDate.parse(fec));
 			
-			
-			
-			//crear objeto de le entidad presentacion
 			
 			pres.setCodigo(codPre);
 			pro.setPresentacion(pres);
@@ -78,18 +73,13 @@ public class ProductoController {
 			lab.setCodigo(codLab);
 			pro.setLaboratorio(lab);
 
-			//validar codi
 			if(cod==0) {
-				//invocar al método registrar
 				servicioProduc.registrar(pro);
-				//mensaje 
 				redirect.addFlashAttribute("MENSAJE","Producto Registrado");
 			}
 			else {
-				//setear atributo codigo
 				pro.setCodigo(cod);
 				servicioProduc.actualizar(pro);
-				//mensaje +
 				redirect.addFlashAttribute("MENSAJE","Producto Actualizado");
 			}
 			
@@ -100,7 +90,7 @@ public class ProductoController {
 	}
 	
 	
-	//crear dirección URL para buscar Medicamento por código
+	
 		@RequestMapping("/consultaPorID")
 		@ResponseBody
 		public Producto consultaPorID(@RequestParam("codigo") Integer cod){
@@ -108,7 +98,7 @@ public class ProductoController {
 		}
 	
 		
-		//crear dirección URL para eliminar Medicamento por código
+		
 		@RequestMapping("/eliminarPorID")
 		public String eliminarPorID(@RequestParam("codigo") Integer cod,
 				RedirectAttributes redirect){

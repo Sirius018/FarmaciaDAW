@@ -22,8 +22,6 @@ public class TipoComprobante {
 	private Integer codigo;
 	@Column(name = "Descripcion")
 	private String descripcion;
-	@Column(name = "Estado")
-	private String estado;
 	
 	@JsonIgnore
 	@OneToMany(mappedBy = "comprobante")
@@ -45,14 +43,6 @@ public class TipoComprobante {
 		this.descripcion = descripcion;
 	}
 
-	public String getEstado() {
-		return estado;
-	}
-
-	public void setEstado(String estado) {
-		this.estado = estado;
-	}
-
 	public List<Ventas> getListaComprobante() {
 		return listaComprobante;
 	}
@@ -60,7 +50,7 @@ public class TipoComprobante {
 	public void setListaComprobante(List<Ventas> listaComprobante) {
 		this.listaComprobante = listaComprobante;
 	}
-	
+
 	
 	
 

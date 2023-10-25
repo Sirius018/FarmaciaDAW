@@ -50,6 +50,9 @@ public class Ventas {
 	@JoinColumn(name = "idEmpleado")
 	private Empleado empleado;
 
+	
+	
+	
 	public Integer getCodigo() {
 		return codigo;
 	}
@@ -153,6 +156,7 @@ public class Ventas {
 	public void setEmpleado(Empleado empleado) {
 		this.empleado = empleado;
 	}
+
 	
 	
 	
