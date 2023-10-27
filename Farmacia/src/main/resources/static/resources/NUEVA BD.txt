@@ -63,12 +63,8 @@ CREATE TABLE `rol_enlace` (
 );
 
 CREATE TABLE `usuario` (
-  `idUsuario` int PRIMARY KEY,
-  `Nombres` varchar(35) NOT NULL,
-  `Apellidos` varchar(35) NOT NULL,
-  `Dni` int(11) NOT NULL,
-  `Email` varchar(35) NOT NULL,
-  `Usuario` varchar(30) NOT NULL,
+  `idUsuario` int PRIMARY KEY, 
+  `correoCorporativo` varchar(30) NOT NULL,
   `Contrasena` varchar(30) NOT NULL,
   `idRol` int NOT NULL,
   FOREIGN KEY (`idRol`) REFERENCES `rol` (`idRol`)
@@ -181,10 +177,10 @@ insert into rol (idRol, descripcion) values
 (2,"Operario"),
 (3,"Invitado");
 
-INSERT INTO usuario (idUsuario, Nombres, Apellidos, Dni, Email, Usuario, Contrasena, idRol) VALUES
-(1, 'Loja Zelada', 'Franz Jensen ', 71902238, 'franz@gmail.com', 'Franz', '123', 1),
-(2, 'Cristian Yover', 'Vasquez Nauca', 33428316, 'cristianyover@gmail.com', 'Yover1234', '1234', 2),
-(3, 'Luis Carlos', 'Zotelo Vargas', 21545655, 'LuisCarZ@gmail.com', 'Luis123', '1234', 3);
+INSERT INTO usuario (idUsuario , correoCorporativo , Contrasena,idRol) VALUES
+(1,  'Franz', '123', 1),
+(2, 'Yover1234', '1234', 2),
+(3, 'Luis123', '1234', 3);
 
 INSERT INTO cliente (idCliente, Nombres, Apellidos, Sexo, Dni, Telefono, Email, Direccion) VALUES
 (1, 'Maria Jesus  ', 'BardalesTrigozo', 'F', '33425619', '987412350', 'mariajesus@gmail.com', 'Jr. Las Americas 1520'),
@@ -242,6 +238,8 @@ INSERT INTO ventas (IdVenta, Serie, Numero, Fecha, VentaTotal, Descuento, SubTot
 (24, '001', 'C00024', '2020-08-12', '45.00', '0.00', '38.14', '6.87', '45.00', 'EMITIDO', 2, 1, 2),
 (25, '001', 'C00025', '2020-08-12', '0.00', '0.00', '0.00', '0.00', '0.00', 'ANULADO', 3, 1, 2),
 (26, '001', 'C00026', '2020-08-13', '25.00', '0.00', '21.19', '3.81', '25.00', 'ANULADO', 4, 1, 2);
+
+
 
 
 
